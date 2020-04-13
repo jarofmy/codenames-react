@@ -166,7 +166,7 @@ class App extends React.Component {
         <Divider variant="middle" />
         <div className='App-score'>
           <h2>
-            <span id='red'>Red: {this.state.redCount}</span> - <span id='blue'>Blue: {this.state.blueCount}</span>
+            <span id='red'>Red: {this.state.redCount}</span>  -  <span id='blue'>Blue: {this.state.blueCount}</span>
           </h2>
         </div>
         <Grid container spacing={3} justify='center' alignItems='center'>
