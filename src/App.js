@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import {Grid, Button, Divider} from '@material-ui/core';
 import Cell from './components/Cell';
 import './App.css';
 
@@ -11,10 +11,12 @@ class App extends React.Component {
   }
 
   state = {
-    words: this.zipWordColors(),
-    redCount: 0,
-    blueCount: 0,
+    words: [],
     gameover: false
+  }
+
+  componentDidMount() {
+    this.setState({ words: this.initializeState() });
   }
 
   randomizeWords() {
@@ -98,20 +100,34 @@ class App extends React.Component {
     return array;
   }
 
-  zipWordColors() {
+  initializeState() {
     let words = this.randomizeWords();
     let colors = this.randomizeColor();
+    let red = 0;
+    let blue = 0;
+
     var zip = words.map(function(e, i) {
       return [e, colors[i]];
     });
+
+    for(let key of zip){
+      if(key[1] === 'red') {
+        red ++;
+      } else if(key[1] === 'blue') {
+        blue ++;
+      }
+    }
+
+    this.setState({redCount: red, blueCount: blue});
+
     return zip;
   }
 
   colorCount(color) {
     if(color === 'red') {
-      this.setState({ redCount: this.state.redCount + 1})
+      this.setState({ redCount: this.state.redCount - 1})
     } else if(color === 'blue') {
-      this.setState({ blueCount: this.state.blueCount + 1})
+      this.setState({ blueCount: this.state.blueCount - 1})
     } else if(color === 'black') {
       this.setState({ gameover: true })
     }
@@ -132,10 +148,11 @@ class App extends React.Component {
   handleSpymaster(e) {
     e.preventDefault();
     // Iterate over cells and add respective color classes
-    // for(let word of this.state.words) {
-    //   let id = word[0];
-    //   document.getElementById(id).classList.add = word[1];
-    // }
+    for(let word of this.state.words) {
+      let id = word[0];
+      document.getElementById('Cell-'+id).className = this.state.spymaster ? '' : word[1];
+    }
+    this.setState({spymaster: !this.state.spymaster})
   }
 
   render() {
@@ -146,11 +163,19 @@ class App extends React.Component {
             Codenames
           </h2>
         </header>
-        <div>
-          <Grid container spacing={3} justify='center' alignItems='center'>
-            {this.renderCells()}
-          </Grid>
-          <button onClick={this.handleSpymaster}>Spymaster</button>
+        <Divider variant="middle" />
+        <div className='App-score'>
+          <h2>
+            <span id='red'>Red: {this.state.redCount}</span> - <span id='blue'>Blue: {this.state.blueCount}</span>
+          </h2>
+        </div>
+        <Grid container spacing={3} justify='center' alignItems='center'>
+          {this.renderCells()}
+        </Grid>
+        <div className='App-content'>
+          <Button variant="contained" color="default" onClick={this.handleSpymaster}>
+            Toggle Spymaster
+          </Button>
         </div>
       </div>
     );

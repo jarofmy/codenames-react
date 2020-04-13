@@ -1,5 +1,16 @@
-header {
-    display: flex   ;
+header, .App-content, .App-score {
+    display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 10px;
+}
+
+.App-score p{
+    font-weight: 800;
+}
+.App-score #red {
+    color: rgba(255, 0, 0, 0.8);
+}
+.App-score #blue {
+    color: rgba(0, 0, 255, 0.8);
 }

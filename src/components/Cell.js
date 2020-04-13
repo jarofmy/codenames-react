@@ -8,7 +8,7 @@ class Cell extends React.Component {
 
     handleClick(word, color) {
         // Update element class color
-        var card = document.getElementById(word);
+        var card = document.getElementById('Cell-'+word);
         card.className = color;
         // Manage color count
         if(!card.value) {
@@ -19,19 +19,19 @@ class Cell extends React.Component {
 
     render() {
         return (
-            <div className={this.props.className}>
+            <div className={this.props.className} id={`Cell-${this.props.word}`}>
                 <Card 
                 variant="outlined" 
                 onClick={() => this.handleClick(this.props.word, this.props.color)} 
                 id={this.props.word} 
                 className='Card'
-            >
-                <CardContent className='Card-content'>
-                    <Typography variant="h5">
-                        {this.props.word}
-                    </Typography>
-                </CardContent>
-            </Card>
+                >
+                    <CardContent className='Card-content'>
+                        <Typography variant="h5">
+                            {this.props.word}
+                        </Typography>
+                    </CardContent>
+                </Card>
             </div>
         )
     }
